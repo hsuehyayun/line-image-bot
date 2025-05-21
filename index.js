@@ -50,17 +50,25 @@ app.post('/webhook', async (req, res) => {
     }
 
     for (const event of events) {
+      const userId = event.source?.userId;
+      const replyToken = event.replyToken;
+
+      // 如果是純文字訊息
       if (event.type === 'message' && event.message.type === 'text') {
         console.log(`✉️ 收到訊息：${event.message.text}`);
-        console.log('📤 準備傳送圖片...');
+        console.log('📤 準備傳送圖片與 userId');
 
         await axios.post('https://api.line.me/v2/bot/message/reply', {
-          replyToken: event.replyToken,
+          replyToken: replyToken,
           messages: [
             {
+              type: 'text',
+              text: `✅ 你的 userId 是：\n${userId}`,
+            },
+            {
               type: 'image',
-              originalContentUrl: `https://i.imgur.com/XaDrRaV.jpeg`,
-              previewImageUrl: `https://i.imgur.com/XaDrRaV.jpeg`,
+              originalContentUrl: `https://i.imgur.com/3ibtlXv.jpeg`,
+              previewImageUrl: `https://i.imgur.com/3ibtlXv.jpeg`,
             }
           ]
         }, {
@@ -70,7 +78,7 @@ app.post('/webhook', async (req, res) => {
           }
         });
 
-        console.log('✅ 圖片傳送指令已發送');
+        console.log('✅ 回覆 userId + 圖片成功');
       }
     }
 
