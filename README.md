@@ -125,6 +125,7 @@ git push
 - LINE Messaging API
 - Express.js
 - GitHub & community docs
+- Line developers documentation https://developers.line.biz/en/docs/messaging-api/using-rich-menus/#set-the-default-rich-menu
 
 ---
 
